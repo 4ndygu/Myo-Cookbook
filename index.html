@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    var yaw, pitch, roll;
     <head>
         <meta charset="utf-8">
         <link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic' rel='stylesheet' type='text/css'>
@@ -18,8 +19,14 @@
                 console.log("connected");
             });
             hub.on('frame', function(frame) {
+                pitch = frame.accel.pitch();
+                yaw = frame.accel.yaw();
+                roll = frame.accel.roll();
+                //document.getElementById('out').innerHTML = frame.rotation;
                 // Get the most recent frame and report some basic information
                 //console.log("Frame id: " + frame.id + ", timestamp: " + frame.timestamp);
+                //console.log("Pitch: " + frame.gyro.pitch() + "Yaw: " + frame.gyro.yaw() + "Roll: " + frame.gyro.roll());
+                //console.log(frame.accel.yaw()+ " " + frame.accel.pitch() + " " + frame.accel.roll());
             });
             hub.on('disconnect', function() {
                 console.log("disconnect");
@@ -141,9 +148,18 @@
                 </script>
         </section>
 
+    <button onclick="hub.myo.vibrate(hub.myo.VIBRATION_SHORT);">Vibrate</button>
+    <button onclick="printposition();">Print Position</button>
+        <script>
+            function printposition(){
+                console.log("Pitch: " + pitch + " Yaw: " + yaw + " Roll: " + roll);
+            }
+        </script>
 
     <footer>
         <p>&copy; Recipe Maker</p>       
     </footer>
+    
+
     </body>
 </html>
