@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="mycss.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="myojs/build/myojs-0.8.7.js"></script>
+        <script>
+            var hub = new Myo.Hub();
+
+            hub.on('ready', function() {
+                console.log("ready");
+            });
+            hub.on('connect', function() {
+                console.log("connected");
+            });
+            hub.on('frame', function(frame) {
+                // Get the most recent frame and report some basic information
+                //console.log("Frame id: " + frame.id + ", timestamp: " + frame.timestamp);
+            });
+            hub.on('disconnect', function() {
+                console.log("disconnect");
+            });
+        </script>
+    </head>
+    
+    <body>
+        <h1 id="header"><a href="index.html">Recipe Maker</a></h1>
+        
+        <nav></nav>
+        
+        <div id="divider"></div>
+        
+        <section class="maintext">
+            <p id="adjust_index">Please enter your recipe.</p>  
+
+            <div id="tasklist">
+                <ol type="1" id="steps">
+                    <li>
+                        <form id="formitem">
+                            <select>
+                              <option>Stir</option>
+                              <option>Cut</option>
+                              <option>Heat</option>
+                            </select>
+                            Item <input type="text" name="itemname">
+                            Quantity <input type="text" name="quant">
+                            Duration <input type="text" name="duration">
+                        </form>
+                        <script>
+
+                        </script>
+                    </li>
+                </ol>
+            </div>
+
+            <button onclick="Add_Item()">+</button>
+                <script>
+                    function Add_Item() {
+                        var element = document.getElementById("steps");
+                        var tasks = ["Stir", "Cut", "Heat"];
+
+                        //Sets ids for the list item, the form item, then the dropdown
+                        var selectList = document.createElement("select");
+                        var li = document.createElement("li");
+                        var formItem = document.createElement("form");
+
+                        //Creates name input box
+                        var nameObject = document.createElement("input");
+                        nameObject.type = "text";
+                        nameObject.text = "Item";
+                        nameObject.name = "itemname";
+                        var nameLabel = document.createTextNode(" Item ");
+                        
+                        //Creates quantity input box
+                        var quantObject = document.createElement("input");
+                        quantObject.type = "text";
+                        quantObject.text = "Quantity";
+                        quantObject.name = "quant";
+                        var quantLabel = document.createTextNode(" Quantity ");
+
+                        //Creates time input box
+                        var timeObject = document.createElement("input");
+                        timeObject.type = "text";
+                        timeObject.text = "Time";
+                        timeObject.name = "duration";
+                        var timeLabel = document.createTextNode(" Duration ");
+
+                        formItem.id = "formitem";
+
+                        //Pushes everything in
+                        li.appendChild(formItem);
+                        formItem.appendChild(selectList);
+                        formItem.appendChild(nameLabel);
+                        formItem.appendChild(nameObject);
+                        formItem.appendChild(quantLabel);
+                        formItem.appendChild(quantObject);
+                        formItem.appendChild(timeLabel);
+                        formItem.appendChild(timeObject);
+                        element.appendChild(li);
+
+                        //Pushes values into the dropdown
+                        for (var i=0; i < tasks.length; i++) {
+                            var option = document.createElement("option");
+                            option.value = tasks[i];
+                            option.text = tasks[i];
+                            selectList.appendChild(option);
+                        }
+                    }
+                </script>
+            <button onclick="Submit()">Submit</button>
+                <script>
+                    function Submit() {
+                        var nums = document.getElementById("steps");
+                        var listItem = steps.getElementsByTagName("li");
+                        //var formsCollection = steps.getElementsByTagName("form");
+                        var formsCollection = document.forms;
+                        for(var i=0;i<formsCollection.length;i++)
+                        {
+                            if (formsCollection[i].elements[0].value == "Heat") 
+                            {
+                                setTimeout(function(){
+                                    hub.myo.vibrate(hub.myo.VIBRATION_LONG);
+                                }, 1000 * formsCollection[i].elements[3].value); 
+                            }
+                            console.log(formsCollection[i].elements[0].value);
+                            console.log(formsCollection[i].elements[1].value);
+                            console.log(formsCollection[i].elements[2].value);
+                        }
+
+
+                        function stateChange(newState) {
+    setTimeout(function(){
+        if(newState == -1){alert('VIDEO HAS STOPPED');}
+    }, 5000);
+}
+                    }
+                </script>
+        </section>
+
+
+    <footer>
+        <p>&copy; Recipe Maker</p>       
+    </footer>
+    </body>
+</html>
