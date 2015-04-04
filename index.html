@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
@@ -28,27 +29,38 @@
     </head>
     
     <body>
-        <h1 id="header"><a href="index.html">Recipe Maker</a></h1>
+        <h2 class="text-center" id="header"><a href="index.html">My(o) Cookbook</a></h2>
         
         <nav></nav>
         
-        <div id="divider"></div>
+        <div id="divider1"></div>
+        <div id="divider2"></div>
+
         
         <section class="maintext">
-            <p id="adjust_index">Please enter your recipe.</p>  
+            <p class="text-info" id="adjust_index">Please enter your recipe.</p>  
 
             <div id="tasklist">
                 <ol type="1" id="steps">
                     <li>
-                        <form id="formitem">
-                            <select>
-                              <option>Stir</option>
-                              <option>Cut</option>
-                              <option>Heat</option>
-                            </select>
-                            Item <input type="text" name="itemname">
-                            Quantity <input type="text" name="quant">
-                            Duration <input type="text" name="duration">
+                        <form class="form-inline" id="formitem">
+                                <select class="form-control">
+                                    <option>Stir</option>
+                                    <option>Cut</option>
+                                    <option>Heat</option>
+                                </select>
+                                <div class="form-group">
+                                    <label for="itemname">Item</label>
+                                    <input type="text" name="itemname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="quant">Quantity</label>
+                                    <input type="text" name="quant">
+                                </div>
+                                <div class="form-group">
+                                    <label for="duration">Duration</label>
+                                    <input type="text" name="duration">
+                                </div>
                         </form>
                         <script>
 
@@ -57,7 +69,7 @@
                 </ol>
             </div>
 
-            <button onclick="Add_Item()">+</button>
+            <button type="button" class="btn btn-primary" onclick="Add_Item()">+</button>
                 <script>
                     function Add_Item() {
                         var element = document.getElementById("steps");
@@ -111,7 +123,7 @@
                         }
                     }
                 </script>
-            <button onclick="Submit()">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="Submit()">Submit</button>
                 <script>
                     function Submit() {
                         var nums = document.getElementById("steps");
@@ -143,7 +155,7 @@
 
 
     <footer>
-        <p>&copy; Recipe Maker</p>       
+        <p>&copy; My(o) Cookbook</p>       
     </footer>
     </body>
 </html>
