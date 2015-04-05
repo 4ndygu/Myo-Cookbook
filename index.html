@@ -24,8 +24,6 @@
             var global_full_data = [];
             var full_data = [];
             var data_index = 0;
-            var timer_current = new Date().getTime();
-            var timer_end = new Date().getTime();
             
             var timer_on = false;
 
@@ -43,10 +41,7 @@
                 y = frame.rotation.y;
                 z = frame.rotation.z;
 
-                timer_current = new Date().getTime();
-
                 clib.ReceiveSignal(x,y,z,pitch,yaw,roll);
-                //console.log(data_index);
  
                 if (full_data.length > 0 && data_index <(full_data.length+3)) {
                     if (full_data[data_index] == 1){
@@ -70,18 +65,13 @@
                         }
                     }
                     if (full_data[data_index] == 3){
-                        if (!timer_on){
-                            //console.log("timer started");
-                            timer_on = true;
-                            timer_end = new Date().getTime() + 1000* full_data[data_index + 2];
-                        } else {
-                            //console.log(timer_current + " " + timer_end);
-                            if (timer_end <= timer_current){
-                                timer_on = false;
-                                data_index += 3;
-                                $('#myCarousel').carousel('next');
-                                hub.myo.vibrate(hub.myo.VIBRATION_SHORT);
-                            }
+                        if (!timer_on && data_index < (full_data.length+3)){
+                            setTimeout(function(){
+                                    //hub.myo.vibrate(hub.myo.VIBRATION_SHORT);
+                                    data_index += 3;
+                                    timer_on = false;
+                                    $('#myCarousel').carousel('next');
+                            }, 1000 * full_data[data_index + 2]); 
                         }
 
                     }
@@ -251,7 +241,7 @@
                     }
                 </script>
 
-            <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Save Recipe</a>
+            <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Save and Run Recipe</a>
                 <script>
                     function Submit() {
                         var nums = document.getElementById("steps");
@@ -275,6 +265,7 @@
                             } 
                             full_data.push(Number(formsCollection[i].elements[2].value));
                             full_data.push(Number(formsCollection[i].elements[3].value));
+                            console.log(full_data);
 
                             if (formsCollection[i].elements[0].value == "Cut") {
                             $('<div class="item"><img src="'+"chop.jpg"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
@@ -289,8 +280,6 @@
                             $('#myCarousel').carousel();
                         }
                         full_data.push(document.getElementById("recipe_name").value);
-
-                        global_full_data.push(full_data);
 
                         var select_list = document.getElementById("savedrecipelist");
                         var new_recipe = document.createElement("option");
