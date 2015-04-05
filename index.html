@@ -15,6 +15,9 @@
         <script src="myojs/build/myojs-0.8.7.js"></script>
         <script src="cookinglib.js"></script>
         <script>
+//set a glob var for if the carousel is up
+//activate when submit is pressed
+
             var hub = new Myo.Hub();
             var clib = new CookingLibrary();
 
@@ -31,6 +34,8 @@
                 x = frame.rotation.x;
                 y = frame.rotation.y;
                 z = frame.rotation.z;
+
+                console.log("meow");
 
                 clib.ReceiveSignal(x,y,z,pitch,yaw,roll);
             });
