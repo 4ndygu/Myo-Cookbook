@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+    var yaw, pitch, roll;
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
@@ -10,7 +12,6 @@
         <script src="myojs/build/myojs-0.8.7.js"></script>
         <script>
             var hub = new Myo.Hub();
-
             hub.on('ready', function() {
                 console.log("ready");
             });
@@ -18,8 +19,14 @@
                 console.log("connected");
             });
             hub.on('frame', function(frame) {
+                pitch = frame.accel.pitch();
+                yaw = frame.accel.yaw();
+                roll = frame.accel.roll();
+                //document.getElementById('out').innerHTML = frame.rotation;
                 // Get the most recent frame and report some basic information
                 //console.log("Frame id: " + frame.id + ", timestamp: " + frame.timestamp);
+                //console.log("Pitch: " + frame.gyro.pitch() + "Yaw: " + frame.gyro.yaw() + "Roll: " + frame.gyro.roll());
+                //console.log(frame.accel.yaw()+ " " + frame.accel.pitch() + " " + frame.accel.roll());
             });
             hub.on('disconnect', function() {
                 console.log("disconnect");
@@ -28,46 +35,54 @@
     </head>
     
     <body>
-        <h1 id="header"><a href="index.html">Recipe Maker</a></h1>
+        <h2 class="text-center" id="header"><a href="index.html">My(o) Cookbook</a></h2>
         
         <nav></nav>
         
-        <div id="divider"></div>
+        <div id="divider1"></div>
+        <div id="divider2"></div>
+
         
         <section class="maintext">
-            <p id="adjust_index">Please enter your recipe.</p>  
+            <p class="text-info" id="adjust_index">Please enter your recipe.</p>  
 
             <div id="tasklist">
                 <ol type="1" id="steps">
                     <li>
-                        <form id="formitem">
-                            <select>
-                              <option>Stir</option>
-                              <option>Cut</option>
-                              <option>Heat</option>
-                            </select>
-                            Item <input type="text" name="itemname">
-                            Quantity <input type="text" name="quant">
-                            Duration <input type="text" name="duration">
+                        <form class="form-inline" id="formitem">
+                                <select class="form-control">
+                                    <option>Stir</option>
+                                    <option>Cut</option>
+                                    <option>Heat</option>
+                                </select>
+                                <div class="form-group">
+                                    <label for="itemname">Item</label>
+                                    <input type="text" name="itemname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="quant">Quantity</label>
+                                    <input type="text" name="quant">
+                                </div>
+                                <div class="form-group">
+                                    <label for="duration">Duration</label>
+                                    <input type="text" name="duration">
+                                </div>
                         </form>
                         <script>
-
                         </script>
                     </li>
                 </ol>
             </div>
 
-            <button onclick="Add_Item()">+</button>
+            <button type="button" class="btn btn-primary" onclick="Add_Item()">+</button>
                 <script>
                     function Add_Item() {
                         var element = document.getElementById("steps");
                         var tasks = ["Stir", "Cut", "Heat"];
-
                         //Sets ids for the list item, the form item, then the dropdown
                         var selectList = document.createElement("select");
                         var li = document.createElement("li");
                         var formItem = document.createElement("form");
-
                         //Creates name input box
                         var nameObject = document.createElement("input");
                         nameObject.type = "text";
@@ -81,16 +96,13 @@
                         quantObject.text = "Quantity";
                         quantObject.name = "quant";
                         var quantLabel = document.createTextNode(" Quantity ");
-
                         //Creates time input box
                         var timeObject = document.createElement("input");
                         timeObject.type = "text";
                         timeObject.text = "Time";
                         timeObject.name = "duration";
                         var timeLabel = document.createTextNode(" Duration ");
-
                         formItem.id = "formitem";
-
                         //Pushes everything in
                         li.appendChild(formItem);
                         formItem.appendChild(selectList);
@@ -101,7 +113,6 @@
                         formItem.appendChild(timeLabel);
                         formItem.appendChild(timeObject);
                         element.appendChild(li);
-
                         //Pushes values into the dropdown
                         for (var i=0; i < tasks.length; i++) {
                             var option = document.createElement("option");
@@ -111,7 +122,7 @@
                         }
                     }
                 </script>
-            <button onclick="Submit()">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="Submit()">Submit</button>
                 <script>
                     function Submit() {
                         var nums = document.getElementById("steps");
@@ -130,34 +141,24 @@
                             console.log(formsCollection[i].elements[1].value);
                             console.log(formsCollection[i].elements[2].value);
                         }
-
-
-                        function stateChange(newState) {
-    setTimeout(function(){
-        if(newState == -1){alert('VIDEO HAS STOPPED');}
-    }, 5000);
-}
                     }
                 </script>
         </section>
 
+    <button onclick="hub.myo.vibrate(hub.myo.VIBRATION_SHORT);">Vibrate</button>
+    <button onclick="printposition();">Print Position</button>
+        <script>
+            function printposition(){
+                console.log("Pitch: " + pitch + " Yaw: " + yaw + " Roll: " + roll);
+            }
+        </script>
 
     <footer>
-        <p>&copy; Recipe Maker</p>       
+        <p>&copy; My(o) Cookbook</p>       
     </footer>
-    </body>
-
-    <button onclick="hub.myo.vibrate(hub.myo.VIBRATION_SHORT);">Vibrate</button>
-    $x = 1;
-    <button onclick="$x=hub.myo.count(1);">Click</button>
-    <p>
-
     
 
-    $x = 1;
-     
-   
-
+    </body>
     
 
 </html>

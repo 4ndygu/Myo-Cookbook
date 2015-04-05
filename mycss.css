@@ -454,7 +454,7 @@ a:hover{
 #header {
     display: block;
     background-color: #D1E8FF;
-    padding: 10px 0 10px 0;
+    padding: 25px 0 20px 0;
     margin: 0;
 }
 
@@ -473,11 +473,17 @@ nav {
     padding: 0 0 1px 0;
 }
 
-#divider {
+#divider1 {
     display: block;
     margin: 0;
-    padding: 1px 50%;
-    background-color: blue;
+    padding: 3px 50%;
+    background-color: #DDEBEE;
+}
+#divider2 {
+    display: block;
+    margin: 0;
+    padding: 3px 50%;
+    background-color: #EBF3F5;
 }
 
 /**
