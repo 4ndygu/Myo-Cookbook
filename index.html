@@ -52,7 +52,7 @@
 
                         var actionDiv = document.getElementById("actioncounter");
                         console.log(actionDiv.innerHTML);
-                        actionDiv.innerHTML=clib.GetCounter() + " Actions left";
+                        actionDiv.innerHTML=clib.GetCounter() + " Actions made.";
                         
                         if (clib.GetCounter() >= global_full_data[rindex][data_index + 1]){
                             $('#myCarousel').carousel('next');
@@ -67,7 +67,7 @@
 
                         var actionDiv = document.getElementById("actioncounter");
                         console.log(actionDiv.innerHTML);
-                        actionDiv.innerHTML=clib.GetCounter() + " Actions left";
+                        actionDiv.innerHTML=clib.GetCounter() + " Actions made.";
 
                         if (clib.GetCounter() >= full_data[data_index + 1]){
                             $('#myCarousel').carousel('next');
