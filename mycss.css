@@ -18,6 +18,7 @@ html {
 
 body {
   margin: 0;
+  background-image: url("bkgd.png");
 }
 
 /* HTML5 display definitions
@@ -132,7 +133,7 @@ dfn {
  * contexts in Firefox 4+, Safari, and Chrome.
  */
 
-h1 {
+h2 {
   font-size: 2em;
   margin: 0.67em 0;
 }
@@ -434,17 +435,19 @@ th {
  */
 
 a:link{
-    color: #000000;
+    color: #2C3D62;
+    font-weight: bold;
     text-decoration: none;
 }
 
 a:visited{
-    color: #000000;
+    color: #2C3D62;
+    font-weight: bold;
     text-decoration: none;
 }
 
 a:hover{
-    color: blue;
+    color: #A1B2C4;
 }
 
 /**
@@ -453,13 +456,14 @@ a:hover{
 
 #header {
     display: block;
-    background-color: #D1E8FF;
+    background-color: #CEE2F6;
     padding: 25px 0 20px 0;
     margin: 0;
 }
 
 #header a {
-    font-family: 'Noto Serif', serif;
+    font-family: 'Lato', sans-serif;
+    font-size: 30pt;
     margin: 0 2.5%;
 }
 
@@ -469,22 +473,29 @@ a:hover{
 
 nav {
     display: block;
-    background-color: #D1E8FF;
-    padding: 0 0 1px 0;
+    background-color: #AFB5C1;
+    padding: 0 0 12px 0;
 }
-
+/*
 #divider1 {
     display: block;
     margin: 0;
-    padding: 3px 50%;
-    background-color: #DDEBEE;
+    padding: 6px 50%;
+    background-color: #DFEFFF;
 }
+
 #divider2 {
     display: block;
     margin: 0;
-    padding: 3px 50%;
-    background-color: #EBF3F5;
+    padding: 4px 50%;
+    background-color: #E8F4FF;
 }
+#divider3 {
+    display: block;
+    margin: 0;
+    padding: 3px 50%;
+    background-color: #F1F8FF;
+} */
 
 /**
  * Core Content.
@@ -500,6 +511,9 @@ nav {
 
 #adjust_index {
     margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #566481;
 }
 
 /**
@@ -515,9 +529,37 @@ nav {
  */
 
 footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
     display: block;
     clear: both;
     margin: 1% 2.5%;
     text-align: center;
     font-size: 10px;
+}
+
+/**
+* Carousel
+*/
+h2{
+    margin: 0;     
+    color: #666;
+    padding-top: 90px;
+    font-size: 52px;
+    font-family: "trebuchet ms", sans-serif;    
+}
+.item{
+    background: #333;    
+    text-align: center;
+    height: 300px !important;
+}
+.carousel{
+    margin-top: 20px;
+}
+
+.form-inline {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
