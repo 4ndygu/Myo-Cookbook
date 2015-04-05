@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <title>My(o) Cookbook</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
@@ -19,8 +20,14 @@
                 console.log("connected");
             });
             hub.on('frame', function(frame) {
+                pitch = frame.accel.pitch();
+                yaw = frame.accel.yaw();
+                roll = frame.accel.roll();
+                //document.getElementById('out').innerHTML = frame.rotation;
                 // Get the most recent frame and report some basic information
                 //console.log("Frame id: " + frame.id + ", timestamp: " + frame.timestamp);
+                //console.log("Pitch: " + frame.gyro.pitch() + "Yaw: " + frame.gyro.yaw() + "Roll: " + frame.gyro.roll());
+                //console.log(frame.accel.yaw()+ " " + frame.accel.pitch() + " " + frame.accel.roll());
             });
             hub.on('disconnect', function() {
                 console.log("disconnect");
@@ -34,43 +41,44 @@
         <nav></nav>
         
         <div id="divider1"></div>
-        <div id="divider2"></div>
-        <div id="divider3"></div>
 
         
         <section class="maintext">
             <p class="text-info" id="adjust_index">Enter your recipe here!</p>  
+            &nbsp;
 
             <div id="tasklist">
-                <ol type="1" id="steps">
-                    <li>
-                        <form class="form-inline" id="formitem">
-                                <select class="form-control">
-                                    <option>Stir</option>
-                                    <option>Cut</option>
-                                    <option>Heat</option>
-                                </select>
-                                <div class="form-group">
-                                    <label for="itemname">Item</label>
-                                    <input type="text" name="itemname">
-                                </div>
-                                <div class="form-group">
-                                    <label for="quant">Quantity</label>
-                                    <input type="text" name="quant">
-                                </div>
-                                <div class="form-group">
-                                    <label for="duration">Duration</label>
-                                    <input type="text" name="duration">
-                                </div>
-                        </form>
-                        <script>
-
-                        </script>
-                    </li>
-                </ol>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <ol type="1" id="steps">
+                            <li>
+                                <form class="form-inline" id="formitem">
+                                    <select class="form-control">
+                                        <option>Stir</option>
+                                        <option>Cut</option>
+                                        <option>Heat</option>
+                                    </select>
+                                    <div class="form-group">
+                                        <label for="itemname">Item</label>
+                                        <input type="text" name="itemname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quant">Quantity</label>
+                                        <input type="text" name="quant">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="duration">Duration</label>
+                                        <input type="text" name="duration">
+                                    </div>
+                                </form>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                &nbsp;
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="Add_Item()">+</button>
+            <button type="button" class="btn btn-info" onclick="Add_Item()">+</button>
                 <script>
                     function Add_Item() {
                         var element = document.getElementById("steps");
@@ -78,42 +86,67 @@
 
                         //Sets ids for the list item, the form item, then the dropdown
                         var selectList = document.createElement("select");
+                        selectList.className = "form-control";
                         var li = document.createElement("li");
                         var formItem = document.createElement("form");
+                        formItem.id = "formitem";
+                        formItem.className = "form-inline";
 
                         //Creates name input box
+                        var nameDiv = document.createElement("div");
+                        nameDiv.className = "form-group";
                         var nameObject = document.createElement("input");
                         nameObject.type = "text";
-                        nameObject.text = "Item";
                         nameObject.name = "itemname";
-                        var nameLabel = document.createTextNode(" Item ");
+                        nameDiv.style.marginLeft = "4px";
+
+                        var nameLabel = document.createElement("Label");
+                        nameLabel.innerHTML = "Item";
+                        nameLabel.htmlFor = "itemname";
+                        nameLabel.style.marginRight = "4px";
+
                         
                         //Creates quantity input box
+                        var quantDiv = document.createElement("div");
+                        quantDiv.className = "form-group";
                         var quantObject = document.createElement("input");
                         quantObject.type = "text";
-                        quantObject.text = "Quantity";
                         quantObject.name = "quant";
-                        var quantLabel = document.createTextNode(" Quantity ");
+                        var quantLabel = document.createElement("Label");
+                        quantLabel.innerHTML = "Quantity";
+                        quantLabel.htmlFor = "quant";
+                        quantLabel.style.marginRight = "4px";
+                        quantLabel.style.marginLeft = "4px";
+
 
                         //Creates time input box
+                        var timeDiv = document.createElement("div");
+                        timeDiv.className = "form-group";
                         var timeObject = document.createElement("input");
                         timeObject.type = "text";
-                        timeObject.text = "Time";
                         timeObject.name = "duration";
-                        var timeLabel = document.createTextNode(" Duration ");
-
-                        formItem.id = "formitem";
+                        var timeLabel = document.createElement("Label");
+                        timeLabel.innerHTML = "Duration";
+                        timeLabel.htmlFor = "itemname";
+                        timeLabel.style.marginRight = "4px";
+                        timeLabel.style.marginLeft = "4px";
 
                         //Pushes everything in
+                        element.appendChild(li);
                         li.appendChild(formItem);
                         formItem.appendChild(selectList);
-                        formItem.appendChild(nameLabel);
-                        formItem.appendChild(nameObject);
-                        formItem.appendChild(quantLabel);
-                        formItem.appendChild(quantObject);
-                        formItem.appendChild(timeLabel);
-                        formItem.appendChild(timeObject);
-                        element.appendChild(li);
+
+                        formItem.appendChild(nameDiv);
+                        nameDiv.appendChild(nameLabel);
+                        nameDiv.appendChild(nameObject);
+
+                        formItem.appendChild(quantDiv);
+                        quantDiv.appendChild(quantLabel);
+                        quantDiv.appendChild(quantObject);
+
+                        formItem.appendChild(timeDiv);
+                        timeDiv.appendChild(timeLabel);
+                        timeDiv.appendChild(timeObject);
 
                         //Pushes values into the dropdown
                         for (var i=0; i < tasks.length; i++) {
@@ -124,7 +157,7 @@
                         }
                     }
                 </script>
-            <button type="button" class="btn btn-primary" onclick="Submit()">Submit</button>
+            <button type="button" class="btn btn-info" onclick="Submit()">Submit</button>
                 <script>
                     function Submit() {
                         var nums = document.getElementById("steps");
@@ -143,13 +176,6 @@
                             console.log(formsCollection[i].elements[1].value);
                             console.log(formsCollection[i].elements[2].value);
                         }
-
-
-                        function stateChange(newState) {
-    setTimeout(function(){
-        if(newState == -1){alert('VIDEO HAS STOPPED');}
-    }, 5000);
-}
                     }
                 </script>
         </section>

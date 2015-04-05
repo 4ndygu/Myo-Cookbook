@@ -18,6 +18,7 @@ html {
 
 body {
   margin: 0;
+  background-image: url("bkgd.png");
 }
 
 /* HTML5 display definitions
@@ -456,7 +457,7 @@ a:hover{
 #header {
     display: block;
     background-color: #CEE2F6;
-    padding: 25px 0 12px 0;
+    padding: 25px 0 20px 0;
     margin: 0;
 }
 
@@ -472,16 +473,17 @@ a:hover{
 
 nav {
     display: block;
-    background-color: #D1E8FF;
+    background-color: #AFB5C1;
     padding: 0 0 12px 0;
 }
-
+/*
 #divider1 {
     display: block;
     margin: 0;
     padding: 6px 50%;
     background-color: #DFEFFF;
 }
+
 #divider2 {
     display: block;
     margin: 0;
@@ -493,7 +495,7 @@ nav {
     margin: 0;
     padding: 3px 50%;
     background-color: #F1F8FF;
-}
+} */
 
 /**
  * Core Content.
@@ -509,6 +511,9 @@ nav {
 
 #adjust_index {
     margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #566481;
 }
 
 /**
@@ -524,6 +529,9 @@ nav {
  */
 
 footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
     display: block;
     clear: both;
     margin: 1% 2.5%;
