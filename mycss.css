@@ -518,6 +518,17 @@ nav {
 }
 
 /**
+*  side bar button
+*/
+#savedrecipelist {
+    min-height: 160px;
+}
+
+#sidebarbutton {
+    margin-top: 10px;
+}
+
+/**
  * Footer.
  */
 
