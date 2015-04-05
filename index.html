@@ -27,6 +27,8 @@
             
             var timer_on = false;
 
+            var rindex = 0;
+
             hub.on('ready', function() {
                 console.log("ready");
             });
@@ -43,18 +45,18 @@
 
                 clib.ReceiveSignal(x,y,z,pitch,yaw,roll);
  
-                if (full_data.length > 0 && data_index <(full_data.length+3)) {
-                    if (full_data[data_index] == 1){
+                if (global_full_data[rindex].length > 0 && data_index <(global_full_data[rindex].length+3)) {
+                    if (global_full_data[rindex][data_index] == 1){
                         clib.ToggleCutOn();
                         console.log(clib.GetCounter());
-                        if (clib.GetCounter() >= full_data[data_index + 1]){
+                        if (clib.GetCounter() >= global_full_data[rindex][data_index + 1]){
                             $('#myCarousel').carousel('next');
                             data_index += 3;
                             clib.ToggleCutOff();
                             clib.ResetCounter();
                         }
                     }
-                    if (full_data[data_index] == 2){
+                    if (global_full_data[rindex][data_index] == 2){
                         clib.ToggleMixOn();
                         console.log(clib.GetCounter());
                         if (clib.GetCounter() >= full_data[data_index + 1]){
@@ -64,6 +66,7 @@
                             clib.ResetCounter();
                         }
                     }
+<<<<<<< HEAD
                     if (full_data[data_index] == 3){
                         if (!timer_on && data_index < (full_data.length+3)){
                             setTimeout(function(){
@@ -72,6 +75,21 @@
                                     timer_on = false;
                                     $('#myCarousel').carousel('next');
                             }, 1000 * full_data[data_index + 2]); 
+=======
+                    if (global_full_data[rindex][data_index] == 3){
+                        if (!timer_on){
+                            //console.log("timer started");
+                            timer_on = true;
+                            timer_end = new Date().getTime() + 1000* global_full_data[rindex][data_index + 2];
+                        } else {
+                            //console.log(timer_current + " " + timer_end);
+                            if (timer_end <= timer_current){
+                                timer_on = false;
+                                data_index += 3;
+                                $('#myCarousel').carousel('next');
+                                hub.myo.vibrate(hub.myo.VIBRATION_SHORT);
+                            }
+>>>>>>> d061f6c07d5da1026362ae5a21ab1716ce9ed518
                         }
 
                     }
