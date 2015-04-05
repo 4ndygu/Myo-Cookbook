@@ -5,8 +5,8 @@ var CookingLibrary = function (){
     var type = 0;
     var mixing_enabled = false;
     var mixing_state = 1;
-    var mixing_min_x = 0.5;
-    var mixing_max_x = 0.7;
+    var mixing_min_x = -1000;
+    var mixing_max_x = 1000;
 
     var mixing_counter = 0;
 
@@ -138,6 +138,10 @@ var CookingLibrary = function (){
     this.ResetCounter = function(){
         mixing_counter = 0;
         cutting_counter = 0;
-    }
+    };
+    this.SetMixBounds = function(x){
+        mixing_max_x = x + 0.05;
+        mixing_min_x = x - 0.04;
+    };
     
 };
