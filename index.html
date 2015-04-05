@@ -181,16 +181,24 @@
                             console.log(formsCollection[i].elements[0].value);
                             console.log(formsCollection[i].elements[1].value);
                             console.log(formsCollection[i].elements[2].value);
-                            $('<div class="item"><img src="'+"fuckthis.png"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
+
+                            if (formsCollection[i].elements[0].value == "Cut") {
+                            $('<div class="item"><img src="'+"chop.jpg"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
+                            }
+                            else if (formsCollection[i].elements[0].value == "Stir") {
+                            $('<div class="item"><img src="'+"stirring.jpg"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
+                            }  
+                            else if (formsCollection[i].elements[0].value == "Heat") {
+                            $('<div class="item"><img src="'+"wait.gif"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
+                            }                                            
                             $('.item').first().addClass('active');
                             $('#myCarousel').carousel();
                         }
                     }
-
                 </script>
 
-<<<<<<< HEAD
-=======
+
+
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -216,7 +224,6 @@
                 </div>
               </div>
             </div>
->>>>>>> c70bf81b1c309baeb6911d944ce58c738c052d57
 
         </section>
     <footer>
