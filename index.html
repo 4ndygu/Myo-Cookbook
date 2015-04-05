@@ -21,6 +21,7 @@
             var hub = new Myo.Hub();
             var clib = new CookingLibrary();
 
+            var global_full_data = [];
             var full_data = [];
             var data_index = 0;
             
@@ -261,7 +262,7 @@
                             }  
                             else if (formsCollection[i].elements[0].value == "Heat") {
                                 full_data.push(3);
-                            }
+                            } 
                             full_data.push(Number(formsCollection[i].elements[2].value));
                             full_data.push(Number(formsCollection[i].elements[3].value));
 
@@ -278,6 +279,13 @@
                             $('#myCarousel').carousel();
                         }
                         full_data.push(document.getElementById("recipe_name").value);
+
+                        global_full_data.push(full_data);
+
+                        var select_list = document.getElementById("savedrecipelist");
+                        var new_recipe = document.createElement("option");
+                        new_recipe.innerHTML = full_data[full_data.length - 1];
+                        select_list.appendChild(new_recipe);
                     }
                 </script>
 
