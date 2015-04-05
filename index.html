@@ -104,7 +104,6 @@
     </head>
     
     <body>
-
         <h1 class="text-center" id="header"><img src="logo.png" alt="Hello" style="width:125px;height:125px"><a href="index.html">My(o) Cookbook</a></h1>
         <nav></nav>
         
@@ -113,10 +112,6 @@
                 <p class="text-info" id="adjust_index">Choose a saved recipe:</p>
                 <select multiple class="form-control" id="savedrecipelist">
                     <option>Andy Soup</option>
-                    <option>Andy Pasta</option>
-                    <option>Andy Brulee</option>
-                    <option>Andy and Rice</option>
-                    <option>Ground Andy</option>
                 </select>
                 <button type="button" class="btn btn-info" id="sidebarbutton">Start cooking!</button>
             </section>
@@ -135,10 +130,10 @@
                         <div class="panel-heading">
                             <div class="form-group">
                                 <label for="itemname">Recipe Name: </label>
-                                <input type="text" name="itemname">
+                                <input type="text" name="itemname" id="recipe_name">
                             </div>
                             <ol type="1" id="steps">
-                                <li>
+                                <li id="stepitem">
                                     <form class="form-inline" id="formitem">
                                         <select class="form-control">
                                             <option>Stir</option>
@@ -174,6 +169,7 @@
                         var selectList = document.createElement("select");
                         selectList.className = "form-control";
                         var li = document.createElement("li");
+                        li.id = "stepitem";
                         var formItem = document.createElement("form");
                         formItem.id = "formitem";
                         formItem.className = "form-inline";
@@ -251,19 +247,12 @@
                         var listItem = steps.getElementsByTagName("li");
                         //var formsCollection = steps.getElementsByTagName("form");
                         var formsCollection = document.forms;
-
+                        console.log(formsCollection[0].elements[0].value);
                         full_data = [];
+                        $( ".carousel-inner").empty();
+
                         for(var i=0;i<formsCollection.length;i++)
                         {
-                            /*
-                            if (formsCollection[i].elements[0].value == "Heat") 
-                            {
-                                setTimeout(function(){
-                                    hub.myo.vibrate(hub.myo.VIBRATION_LONG);
-                                }, 1000 * formsCollection[i].elements[3].value); 
-                            }
-                            */
-
                             if (formsCollection[i].elements[0].value == "Cut") {
                                 full_data.push(1);
                             }
@@ -288,6 +277,7 @@
                             $('.item').first().addClass('active');
                             $('#myCarousel').carousel();
                         }
+                        full_data.push(document.getElementById("recipe_name").value);
                     }
                 </script>
 
