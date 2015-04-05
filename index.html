@@ -15,6 +15,9 @@
         <script src="myojs/build/myojs-0.8.7.js"></script>
         <script src="cookinglib.js"></script>
         <script>
+//set a glob var for if the carousel is up
+//activate when submit is pressed
+
             var hub = new Myo.Hub();
             var clib = new CookingLibrary();
 
@@ -38,7 +41,9 @@
                 y = frame.rotation.y;
                 z = frame.rotation.z;
 
-                timer_current = new Date();
+<<<<<<< HEAD
+
+>>>>>>> d00510bc5a9feaf094592aab5a52d950c0e0f42c
 
                 clib.ReceiveSignal(x,y,z,pitch,yaw,roll);
  
@@ -104,48 +109,63 @@
     </head>
     
     <body>
-        <h1 class="text-center" id="header"><a href="index.html">My(o) Cookbook</a></h1>
-        
+
+        <h1 class="text-center" id="header"><img src="logo.png" alt="Hello" style="width:125px;height:125px"><a href="index.html">My(o) Cookbook</a></h1>
         <nav></nav>
         
-        <div id="divider1"></div>
+        <div id="section1">
+            <section class="maintext">
+                <p class="text-info" id="adjust_index">Choose a saved recipe:</p>
+                <select multiple class="form-control" id="savedrecipelist">
+                    <option>Andy Soup</option>
+                    <option>Andy Pasta</option>
+                    <option>Andy Brulee</option>
+                    <option>Andy and Rice</option>
+                    <option>Ground Andy</option>
+                </select>
+                <button type="button" class="btn btn-info" id="sidebarbutton">Start cooking!</button>
+            </section>
+            <a id="twitbutton" href="https://twitter.com/uscfishsticks" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @uscfishsticks</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
-        
-        <section class="maintext">
-            <p class="text-info" id="adjust_index">Enter your recipe here!</p>  
+            <a id="twitbutton" href="https://twitter.com/intent/tweet?screen_name=uscfishsticks&text=Just%20finished%20cooking%20with%20%23My(o)Cookbook!%20" class="twitter-mention-button" data-size="large" data-related="uscfishsticks">Tweet to @uscfishsticks</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
 
-            <div id="tasklist">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <ol type="1" id="steps">
-                            <li>
-                                <form class="form-inline" id="formitem">
-                                    <select class="form-control">
-                                        <option>Stir</option>
-                                        <option>Cut</option>
-                                        <option>Heat</option>
-                                    </select>
-                                    <div class="form-group">
-                                        <label for="itemname">Item</label>
-                                        <input type="text" name="itemname">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="quant">Quantity</label>
-                                        <input type="text" name="quant">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="duration">Duration</label>
-                                        <input type="text" name="duration">
-                                    </div>
-                                </form>
-                            </li>
-                        </ol>
+        <div id="section2">
+            <section class="maintext">
+                <p class="text-info" id="adjust_index">Or enter your own recipe here!</p>  
+                <div id="tasklist">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <ol type="1" id="steps">
+                                <li>
+                                    <form class="form-inline" id="formitem">
+                                        <select class="form-control">
+                                            <option>Stir</option>
+                                            <option>Cut</option>
+                                            <option>Heat</option>
+                                        </select>
+                                        <div class="form-group">
+                                            <label for="itemname">Item</label>
+                                            <input type="text" name="itemname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="quant">Quantity</label>
+                                            <input type="text" name="quant">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="duration">Duration</label>
+                                            <input type="text" name="duration">
+                                        </div>
+                                    </form>
+                                </li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
-                &nbsp;
-            </div>
 
-            <button type="button" class="btn btn-info" onclick="Add_Item()">+</button>
+            <button type="button" class="btn btn-info" onclick="Add_Item()">Add Step</button>
                 <script>
                     function Add_Item() {
                         var element = document.getElementById("steps");
@@ -224,7 +244,7 @@
                         }
                     }
                 </script>
-            <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Submit</a>
+            <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Save Recipe</a>
                 <script>
                     function Submit() {
                         var nums = document.getElementById("steps");
@@ -270,8 +290,6 @@
                     }
                 </script>
 
-
-
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -298,6 +316,7 @@
             </div>
 
         </section>
+    </div>
     <footer>
         <p>&copy; My(o) Cookbook</p>       
     </footer>
