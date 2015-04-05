@@ -49,6 +49,11 @@
                     if (global_full_data[rindex][data_index] == 1){
                         clib.ToggleCutOn();
                         console.log(clib.GetCounter());
+
+                        var actionDiv = document.getElementById("actioncounter");
+                        console.log(actionDiv.innerHTML);
+                        actionDiv.innerHTML=clib.GetCounter() + " Actions left";
+                        
                         if (clib.GetCounter() >= global_full_data[rindex][data_index + 1]){
                             $('#myCarousel').carousel('next');
                             data_index += 3;
@@ -59,6 +64,11 @@
                     if (global_full_data[rindex][data_index] == 2){
                         clib.ToggleMixOn();
                         console.log(clib.GetCounter());
+
+                        var actionDiv = document.getElementById("actioncounter");
+                        console.log(actionDiv.innerHTML);
+                        actionDiv.innerHTML=clib.GetCounter() + " Actions left";
+
                         if (clib.GetCounter() >= full_data[data_index + 1]){
                             $('#myCarousel').carousel('next');
                             data_index += 3;
@@ -66,7 +76,6 @@
                             clib.ResetCounter();
                         }
                     }
-<<<<<<< HEAD
                     if (full_data[data_index] == 3){
                         if (!timer_on && data_index < (full_data.length+3)){
                             setTimeout(function(){
@@ -75,21 +84,6 @@
                                     timer_on = false;
                                     $('#myCarousel').carousel('next');
                             }, 1000 * full_data[data_index + 2]); 
-=======
-                    if (global_full_data[rindex][data_index] == 3){
-                        if (!timer_on){
-                            //console.log("timer started");
-                            timer_on = true;
-                            timer_end = new Date().getTime() + 1000* global_full_data[rindex][data_index + 2];
-                        } else {
-                            //console.log(timer_current + " " + timer_end);
-                            if (timer_end <= timer_current){
-                                timer_on = false;
-                                data_index += 3;
-                                $('#myCarousel').carousel('next');
-                                hub.myo.vibrate(hub.myo.VIBRATION_SHORT);
-                            }
->>>>>>> d061f6c07d5da1026362ae5a21ab1716ce9ed518
                         }
 
                     }
@@ -119,6 +113,9 @@
             hub.on('disconnect', function() {
                 console.log("disconnect");
             });
+            //actionDiv.innerHTML = "fuck this shit";
+
+
         </script>
     </head>
     
@@ -219,7 +216,6 @@
                         quantLabel.style.marginRight = "4px";
                         quantLabel.style.marginLeft = "4px";
 
-
                         //Creates time input box
                         var timeDiv = document.createElement("div");
                         timeDiv.className = "form-group";
@@ -262,6 +258,11 @@
             <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Save and Run Recipe</a>
                 <script>
                     function Submit() {
+
+                        //var actionDiv = document.getElementById("actioncounter");
+                        //console.log(actionDiv.innerHTML);
+                        //actionDiv.innerHTML="fuck this";
+
                         var nums = document.getElementById("steps");
                         var listItem = steps.getElementsByTagName("li");
                         //var formsCollection = steps.getElementsByTagName("form");
@@ -311,7 +312,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel">Recipe</h4>
                   </div>
                   <div class="modal-body">
 
@@ -325,6 +326,9 @@
 
                   </div>
                   <div class="modal-footer">
+                    <h4 id="actioncounter" style="text-align:center">Actions Left</h4>
+                    <script>
+                    </script>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
                 </div>
