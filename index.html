@@ -41,6 +41,8 @@
                 y = frame.rotation.y;
                 z = frame.rotation.z;
 
+                console.log(yaw);
+
                 clib.ReceiveSignal(x,y,z,pitch,yaw,roll);
  
                 if (full_data.length > 0 && data_index <(full_data.length+3)) {
@@ -49,8 +51,8 @@
                         console.log(clib.GetCounter());
 
                         var actionDiv = document.getElementById("actioncounter");
-                        console.log(actionDiv.innerHTML);
-                        actionDiv.innerHTML=clib.GetCounter() + " Actions made.";
+                        //console.log(actionDiv.innerHTML);
+                        actionDiv.innerHTML=clib.GetCounter() + " Cuts Made";
                         
                         if (clib.GetCounter() >= full_data[data_index + 1]){
                             $('#myCarousel').carousel('next');
@@ -64,8 +66,8 @@
                         console.log(clib.GetCounter());
 
                         var actionDiv = document.getElementById("actioncounter");
-                        console.log(actionDiv.innerHTML);
-                        actionDiv.innerHTML=clib.GetCounter() + " Actions made.";
+                        //console.log(actionDiv.innerHTML);
+                        actionDiv.innerHTML=clib.GetCounter() + " Stirs Made";
 
                         if (clib.GetCounter() >= full_data[data_index + 1]){
                             $('#myCarousel').carousel('next');
@@ -93,6 +95,11 @@
                     if (full_data[data_index] == 4){
                         clib.ToggleFlipOn();
                         console.log(clib.GetCounter());
+
+                        var actionDiv = document.getElementById("actioncounter");
+                        //console.log(actionDiv.innerHTML);
+                        actionDiv.innerHTML=clib.GetCounter() + " Flips Made";
+
                         if (clib.GetCounter() >= full_data[data_index + 1]){
                             $('#myCarousel').carousel('next');
                             data_index += 3;
@@ -107,6 +114,7 @@
                 if (pose.type == pose.POSE_FIST){
                     hub.myo.vibrate(hub.myo.VIBRATION_SHORT);
                     clib.SetMixBounds(x);
+                    clib.SetFlipBounds(yaw);
                 }
                 if (pose.type == pose.POSE_WAVE_IN){
                     if (full_data.length> 0 && data_index < (full_data.length + 3)){
@@ -168,6 +176,7 @@
                                             <option>Stir</option>
                                             <option>Cut</option>
                                             <option>Heat</option>
+                                            <option>Flip</option>
                                         </select>
                                         <div class="form-group">
                                             <label for="itemname">Item</label>
