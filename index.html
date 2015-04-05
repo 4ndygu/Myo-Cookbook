@@ -13,16 +13,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
         <script type='text/javascript' src="http://imsky.github.io/holder/holder.js"></script>
         <script src="myojs/build/myojs-0.8.7.js"></script>
+        <script src="cookinglib.js"></script>
         <script>
             var hub = new Myo.Hub();
-            var pitch, yaw, roll;
-            var x, y, z;
-
-            var mixing_enabled = false;
-            var mixing_state = 1;
-            var mixing_min_x = -0.5;
-            var mixing_max_x = 0.5;
-            var mixing_counter = 0;
+            var clib = new CookingLibrary();
 
             hub.on('ready', function() {
                 console.log("ready");
@@ -38,23 +32,8 @@
                 y = frame.rotation.y;
                 z = frame.rotation.z;
 
-                if (mixing_enabled){
-                    if (mixing_state == 1){
-                        if (yaw < mixing_min_x){
-                            mixing_state = 2;
-                            console.log("swing left");
-                        }
-                    } else {
-                        if (yaw > mixing_max_x){
-                            mixing_state = 1;
-                            console.log("swing right");
-                            mixing_counter++;
-                            console.log(mixing_counter + " mixes");
-                        }
-
-                    }
-                }
-            }
+                clib.ReceiveSignal(x,y,z,pitch,yaw,roll);
+            });
             hub.on('disconnect', function() {
                 console.log("disconnect");
             });
@@ -66,175 +45,202 @@
         
         <nav></nav>
         
-        <div id="divider1"></div>
+        <div id="section2">
+            <section class="maintext">
+                <p class="text-info" id="adjust_index">Or enter your own recipe here!</p>  
 
-        
-        <section class="maintext">
-            <p class="text-info" id="adjust_index">Enter your recipe here!</p>  
-            &nbsp;
-
-            <div id="tasklist">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <ol type="1" id="steps">
-                            <li>
-                                <form class="form-inline" id="formitem">
-                                    <select class="form-control">
-                                        <option>Stir</option>
-                                        <option>Cut</option>
-                                        <option>Heat</option>
-                                    </select>
-                                    <div class="form-group">
-                                        <label for="itemname">Item</label>
-                                        <input type="text" name="itemname">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="quant">Quantity</label>
-                                        <input type="text" name="quant">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="duration">Duration</label>
-                                        <input type="text" name="duration">
-                                    </div>
-                                </form>
-                            </li>
-                        </ol>
+                <div id="tasklist">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <form>
+                                <div class="form-group">
+                                    <label for="dishname">Name of Dish:</label>
+                                    &nbsp;
+                                    <input type="text" name="dishname">
+                                </div>
+                            </form>
+                            <ol type="1" id="steps">
+                                <li>
+                                    <form class="form-inline" id="formitem">
+                                        <select class="form-control">
+                                            <option>Stir</option>
+                                            <option>Cut</option>
+                                            <option>Heat</option>
+                                        </select>
+                                        <div class="form-group">
+                                            <label for="itemname">Item</label>
+                                            <input type="text" name="itemname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="quant">Quantity</label>
+                                            <input type="text" name="quant">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="duration">Duration</label>
+                                            <input type="text" name="duration">
+                                        </div>
+                                    </form>
+                                </li>
+                            </ol>
+                        </div>
                     </div>
+                    &nbsp;
                 </div>
-                &nbsp;
-            </div>
 
-            <button type="button" class="btn btn-info" onclick="Add_Item()">+</button>
-                <script>
-                    function Add_Item() {
-                        var element = document.getElementById("steps");
-                        var tasks = ["Stir", "Cut", "Heat"];
+                <button type="button" class="btn btn-info" onclick="Add_Item()">+</button>
+                    <script>
+                        function Add_Item() {
+                            var element = document.getElementById("steps");
+                            var tasks = ["Stir", "Cut", "Heat"];
 
-                        //Sets ids for the list item, the form item, then the dropdown
-                        var selectList = document.createElement("select");
-                        selectList.className = "form-control";
-                        var li = document.createElement("li");
-                        var formItem = document.createElement("form");
-                        formItem.id = "formitem";
-                        formItem.className = "form-inline";
+                            //Sets ids for the list item, the form item, then the dropdown
+                            var selectList = document.createElement("select");
+                            selectList.className = "form-control";
+                            var li = document.createElement("li");
+                            var formItem = document.createElement("form");
+                            formItem.id = "formitem";
+                            formItem.className = "form-inline";
 
-                        //Creates name input box
-                        var nameDiv = document.createElement("div");
-                        nameDiv.className = "form-group";
-                        var nameObject = document.createElement("input");
-                        nameObject.type = "text";
-                        nameObject.name = "itemname";
-                        nameDiv.style.marginLeft = "4px";
+                            //Creates name input box
+                            var nameDiv = document.createElement("div");
+                            nameDiv.className = "form-group";
+                            var nameObject = document.createElement("input");
+                            nameObject.type = "text";
+                            nameObject.name = "itemname";
+                            nameDiv.style.marginLeft = "4px";
 
-                        var nameLabel = document.createElement("Label");
-                        nameLabel.innerHTML = "Item";
-                        nameLabel.htmlFor = "itemname";
-                        nameLabel.style.marginRight = "4px";
+                            var nameLabel = document.createElement("Label");
+                            nameLabel.innerHTML = "Item";
+                            nameLabel.htmlFor = "itemname";
+                            nameLabel.style.marginRight = "4px";
 
-                        
-                        //Creates quantity input box
-                        var quantDiv = document.createElement("div");
-                        quantDiv.className = "form-group";
-                        var quantObject = document.createElement("input");
-                        quantObject.type = "text";
-                        quantObject.name = "quant";
-                        var quantLabel = document.createElement("Label");
-                        quantLabel.innerHTML = "Quantity";
-                        quantLabel.htmlFor = "quant";
-                        quantLabel.style.marginRight = "4px";
-                        quantLabel.style.marginLeft = "4px";
+                            
+                            //Creates quantity input box
+                            var quantDiv = document.createElement("div");
+                            quantDiv.className = "form-group";
+                            var quantObject = document.createElement("input");
+                            quantObject.type = "text";
+                            quantObject.name = "quant";
+                            var quantLabel = document.createElement("Label");
+                            quantLabel.innerHTML = "Quantity";
+                            quantLabel.htmlFor = "quant";
+                            quantLabel.style.marginRight = "4px";
+                            quantLabel.style.marginLeft = "4px";
 
 
-                        //Creates time input box
-                        var timeDiv = document.createElement("div");
-                        timeDiv.className = "form-group";
-                        var timeObject = document.createElement("input");
-                        timeObject.type = "text";
-                        timeObject.name = "duration";
-                        var timeLabel = document.createElement("Label");
-                        timeLabel.innerHTML = "Duration";
-                        timeLabel.htmlFor = "itemname";
-                        timeLabel.style.marginRight = "4px";
-                        timeLabel.style.marginLeft = "4px";
+                            //Creates time input box
+                            var timeDiv = document.createElement("div");
+                            timeDiv.className = "form-group";
+                            var timeObject = document.createElement("input");
+                            timeObject.type = "text";
+                            timeObject.name = "duration";
+                            var timeLabel = document.createElement("Label");
+                            timeLabel.innerHTML = "Duration";
+                            timeLabel.htmlFor = "itemname";
+                            timeLabel.style.marginRight = "4px";
+                            timeLabel.style.marginLeft = "4px";
 
-                        //Pushes everything in
-                        element.appendChild(li);
-                        li.appendChild(formItem);
-                        formItem.appendChild(selectList);
+                            //Pushes everything in
+                            element.appendChild(li);
+                            li.appendChild(formItem);
+                            formItem.appendChild(selectList);
 
-                        formItem.appendChild(nameDiv);
-                        nameDiv.appendChild(nameLabel);
-                        nameDiv.appendChild(nameObject);
+                            formItem.appendChild(nameDiv);
+                            nameDiv.appendChild(nameLabel);
+                            nameDiv.appendChild(nameObject);
 
-                        formItem.appendChild(quantDiv);
-                        quantDiv.appendChild(quantLabel);
-                        quantDiv.appendChild(quantObject);
+                            formItem.appendChild(quantDiv);
+                            quantDiv.appendChild(quantLabel);
+                            quantDiv.appendChild(quantObject);
 
-                        formItem.appendChild(timeDiv);
-                        timeDiv.appendChild(timeLabel);
-                        timeDiv.appendChild(timeObject);
+                            formItem.appendChild(timeDiv);
+                            timeDiv.appendChild(timeLabel);
+                            timeDiv.appendChild(timeObject);
 
-                        //Pushes values into the dropdown
-                        for (var i=0; i < tasks.length; i++) {
-                            var option = document.createElement("option");
-                            option.value = tasks[i];
-                            option.text = tasks[i];
-                            selectList.appendChild(option);
-                        }
-                    }
-                </script>
-            <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Submit</a>
-                <script>
-                    function Submit() {
-                        var nums = document.getElementById("steps");
-                        var listItem = steps.getElementsByTagName("li");
-                        //var formsCollection = steps.getElementsByTagName("form");
-                        var formsCollection = document.forms;
-                        for(var i=0;i<formsCollection.length;i++)
-                        {
-                            if (formsCollection[i].elements[0].value == "Heat") 
-                            {
-                                setTimeout(function(){
-                                    hub.myo.vibrate(hub.myo.VIBRATION_LONG);
-                                }, 1000 * formsCollection[i].elements[3].value); 
+                            //Pushes values into the dropdown
+                            for (var i=0; i < tasks.length; i++) {
+                                var option = document.createElement("option");
+                                option.value = tasks[i];
+                                option.text = tasks[i];
+                                selectList.appendChild(option);
                             }
-                            console.log(formsCollection[i].elements[0].value);
-                            console.log(formsCollection[i].elements[1].value);
-                            console.log(formsCollection[i].elements[2].value);
-                            $('<div class="item"><img src="'+"fuckthis.png"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
-                            $('.item').first().addClass('active');
-                            $('#myCarousel').carousel();
                         }
-                    }
+                    </script>
+                <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Submit</a>
+                    <script>
+                        function Submit() {
+                            var nums = document.getElementById("steps");
+                            var listItem = steps.getElementsByTagName("li");
+                            //var formsCollection = steps.getElementsByTagName("form");
+                            var formsCollection = document.forms;
+                            for(var i=0;i<formsCollection.length;i++)
+                            {
+                                if (formsCollection[i].elements[0].value == "Heat") 
+                                {
+                                    setTimeout(function(){
+                                        hub.myo.vibrate(hub.myo.VIBRATION_LONG);
+                                    }, 1000 * formsCollection[i].elements[3].value); 
+                                }
+                                console.log(formsCollection[i].elements[0].value);
+                                console.log(formsCollection[i].elements[1].value);
+                                console.log(formsCollection[i].elements[2].value);
 
-                </script>
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                  </div>
-                  <div class="modal-body">
+                                if (formsCollection[i].elements[0].value == "Cut") {
+                                $('<div class="item"><img src="'+"chop.jpg"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
+                                }
+                                else if (formsCollection[i].elements[0].value == "Stir") {
+                                $('<div class="item"><img src="'+"stirring.jpg"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
+                                }  
+                                else if (formsCollection[i].elements[0].value == "Heat") {
+                                $('<div class="item"><img src="'+"wait.gif"+'"><div class="carousel-caption">"'+formsCollection[i].elements[0].value+ " " + formsCollection[i].elements[2].value + " " +formsCollection[i].elements[1].value + " for " + formsCollection[i].elements[3].value + ' seconds"</div></div>').appendTo('.carousel-inner');
+                                }                                            
+                                $('.item').first().addClass('active');
+                                $('#myCarousel').carousel();
+                            }
+                        }
+                    </script>
 
-                    <div class="bs-example">
-                        <div id="myCarousel" class="carousel slide" data-interval="false" data-ride="carousel" data-wrap="false"> 
-                           <!-- Carousel items -->
-                            <div class="carousel-inner">
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Title</h4>
+                      </div>
+                      <div class="modal-body">
+
+                        <div class="bs-example">
+                            <div id="myCarousel" class="carousel slide" data-interval="false" data-ride="carousel" data-wrap="false"> 
+                               <!-- Carousel items -->
+                                <div class="carousel-inner">
+                                </div>
                             </div>
+
                         </div>
 
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
                     </div>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
                 </div>
-              </div>
-            </div>
 
-        </section>
+            </section>
+        </div>
+        <div id="section1">
+            <section class="maintext">
+                <p class="text-info" id="adjust_index">Choose a saved recipe:</p>
+                <select multiple class="form-control">
+                    <option>Andy Soup</option>
+                    <option>Andy Pasta</option>
+                    <option>Andy Brulee</option>
+                    <option>Andy and Rice</option>
+                    <option>Ground Andy</option>
+                </select>
+                <button type="button" class="btn btn-info">Start cooking</button>
+            </section>
+        </div>
     <footer>
         <p>&copy; My(o) Cookbook</p>       
     </footer>

@@ -457,7 +457,7 @@ a:hover{
 #header {
     display: block;
     background-color: #CEE2F6;
-    padding: 25px 0 20px 0;
+    padding: 40px 0 40px 0;
     margin: 0;
 }
 
@@ -476,26 +476,7 @@ nav {
     background-color: #AFB5C1;
     padding: 0 0 12px 0;
 }
-/*
-#divider1 {
-    display: block;
-    margin: 0;
-    padding: 6px 50%;
-    background-color: #DFEFFF;
-}
 
-#divider2 {
-    display: block;
-    margin: 0;
-    padding: 4px 50%;
-    background-color: #E8F4FF;
-}
-#divider3 {
-    display: block;
-    margin: 0;
-    padding: 3px 50%;
-    background-color: #F1F8FF;
-} */
 
 /**
  * Core Content.
@@ -514,6 +495,18 @@ nav {
     font-size: 20px;
     font-weight: bold;
     color: #566481;
+}
+
+#section1 {
+    width: 20%;
+    float: left;
+    margin-left: 2.5%;
+}
+
+#section2 {
+    width: 70%;
+    float:right;
+    margin-right: 2.5%;
 }
 
 /**
@@ -538,24 +531,3 @@ footer {
     text-align: center;
     font-size: 10px;
 }
-
-/**
-* Carousel
-*/
-h2{
-    margin: 0;     
-    color: #666;
-    padding-top: 90px;
-    font-size: 52px;
-    font-family: "trebuchet ms", sans-serif;    
-}
-.item{
-    background: #333;    
-    text-align: center;
-    height: 300px !important;
-}
-.carousel{
-    margin-top: 20px;
-}
-.bs-example{
-    m
