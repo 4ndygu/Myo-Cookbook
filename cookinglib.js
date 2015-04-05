@@ -168,8 +168,8 @@ var CookingLibrary = function (){
         mixing_min_x = x - 0.02;
     };
     this.SetFlipBounds = function(yaw){
-        flipping_max_yaw = yaw + 2.5;
-        flipping_min_yaw = yaw - 0.5;
+        flipping_max_yaw = yaw + 1.5;
+        flipping_min_yaw = yaw - 0.7;
     };
     
 };
