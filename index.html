@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <title>My(o) Cookbook</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="mycss.css">
@@ -41,47 +42,49 @@
     </head>
     
     <body>
-        <h2 class="text-center" id="header"><a href="index.html">My(o) Cookbook</a></h2>
+        <h1 class="text-center" id="header"><a href="index.html">My(o) Cookbook</a></h1>
         
         <nav></nav>
         
         <div id="divider1"></div>
-        <div id="divider2"></div>
 
         
         <section class="maintext">
-            <p class="text-info" id="adjust_index">Please enter your recipe.</p>  
+            <p class="text-info" id="adjust_index">Enter your recipe here!</p>  
+            &nbsp;
 
             <div id="tasklist">
-                <ol type="1" id="steps">
-                    <li>
-                        <form class="form-inline" id="formitem">
-                                <select class="form-control">
-                                    <option>Stir</option>
-                                    <option>Cut</option>
-                                    <option>Heat</option>
-                                </select>
-                                <div class="form-group">
-                                    <label for="itemname">Item</label>
-                                    <input type="text" name="itemname">
-                                </div>
-                                <div class="form-group">
-                                    <label for="quant">Quantity</label>
-                                    <input type="text" name="quant">
-                                </div>
-                                <div class="form-group">
-                                    <label for="duration">Duration</label>
-                                    <input type="text" name="duration">
-                                </div>
-                        </form>
-                        <script>
-
-                        </script>
-                    </li>
-                </ol>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <ol type="1" id="steps">
+                            <li>
+                                <form class="form-inline" id="formitem">
+                                    <select class="form-control">
+                                        <option>Stir</option>
+                                        <option>Cut</option>
+                                        <option>Heat</option>
+                                    </select>
+                                    <div class="form-group">
+                                        <label for="itemname">Item</label>
+                                        <input type="text" name="itemname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quant">Quantity</label>
+                                        <input type="text" name="quant">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="duration">Duration</label>
+                                        <input type="text" name="duration">
+                                    </div>
+                                </form>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                &nbsp;
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="Add_Item()">+</button>
+            <button type="button" class="btn btn-info" onclick="Add_Item()">+</button>
                 <script>
                     function Add_Item() {
                         var element = document.getElementById("steps");
@@ -133,9 +136,6 @@
                         timeLabel.htmlFor = "itemname";
                         timeLabel.style.marginRight = "4px";
                         timeLabel.style.marginLeft = "4px";
-
-
-
 
                         //Pushes everything in
                         element.appendChild(li);
@@ -189,6 +189,8 @@
 
                 </script>
 
+<<<<<<< HEAD
+=======
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -214,13 +216,12 @@
                 </div>
               </div>
             </div>
+>>>>>>> c70bf81b1c309baeb6911d944ce58c738c052d57
 
         </section>
     <footer>
         <p>&copy; My(o) Cookbook</p>       
     </footer>
-    
-
     </body>
     
 
