@@ -12,16 +12,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
         <script type='text/javascript' src="http://imsky.github.io/holder/holder.js"></script>
         <script src="myojs/build/myojs-0.8.7.js"></script>
+        <script src="cookinglib.js"></script>
         <script>
             var hub = new Myo.Hub();
-            var pitch, yaw, roll;
-            var x, y, z;
-
-            var mixing_enabled = false;
-            var mixing_state = 1;
-            var mixing_min_x = -0.5;
-            var mixing_max_x = 0.5;
-            var mixing_counter = 0;
+            var clib = new CookingLibrary();
 
             hub.on('ready', function() {
                 console.log("ready");
@@ -37,23 +31,9 @@
                 y = frame.rotation.y;
                 z = frame.rotation.z;
 
-                if (mixing_enabled){
-                    if (mixing_state == 1){
-                        if (yaw < mixing_min_x){
-                            mixing_state = 2;
-                            console.log("swing left");
-                        }
-                    } else {
-                        if (yaw > mixing_max_x){
-                            mixing_state = 1;
-                            console.log("swing right");
-                            mixing_counter++;
-                            console.log(mixing_counter + " mixes");
-                        }
-
-                    }
-                }
-            }
+                clib.ReceiveSignal(x,y,z,pitch,yaw,roll);
+                console.log(clib.getMixCounter());
+            });
             hub.on('disconnect', function() {
                 console.log("disconnect");
             });
