@@ -23,8 +23,7 @@
 
             var full_data = [];
             var data_index = 0;
-            var timer_max = new Date();
-            var timer_current = new Date();
+            
             var timer_on = false;
 
             hub.on('ready', function() {
@@ -40,10 +39,6 @@
                 x = frame.rotation.x;
                 y = frame.rotation.y;
                 z = frame.rotation.z;
-
-<<<<<<< HEAD
-
->>>>>>> d00510bc5a9feaf094592aab5a52d950c0e0f42c
 
                 clib.ReceiveSignal(x,y,z,pitch,yaw,roll);
  
