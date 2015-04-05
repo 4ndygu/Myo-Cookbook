@@ -118,6 +118,7 @@
                     <option>Andy and Rice</option>
                     <option>Ground Andy</option>
                 </select>
+
                 <button type="button" class="btn btn-info" id="sidebarbutton">Start cooking</button>
             </section>
             <a id="twitbutton" href="https://twitter.com/uscfishsticks" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @uscfishsticks</a>
@@ -133,6 +134,10 @@
                 <div id="tasklist">
                     <div class="panel panel-info">
                         <div class="panel-heading">
+                            <div class="form-group">
+                                <label for="itemname">Recipe Name: </label>
+                                <input type="text" name="itemname">
+                            </div>
                             <ol type="1" id="steps">
                                 <li>
                                     <form class="form-inline" id="formitem">
@@ -239,13 +244,15 @@
                         }
                     }
                 </script>
-            <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Submit</a>
+            <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" onclick="Submit()">Save</a>
                 <script>
                     function Submit() {
                         var nums = document.getElementById("steps");
                         var listItem = steps.getElementsByTagName("li");
                         //var formsCollection = steps.getElementsByTagName("form");
                         var formsCollection = document.forms;
+
+                        full_data = [];
                         for(var i=0;i<formsCollection.length;i++)
                         {
                             if (formsCollection[i].elements[0].value == "Heat") 
@@ -279,7 +286,6 @@
                             $('.item').first().addClass('active');
                             $('#myCarousel').carousel();
                         }
-                        console.log(full_data);
                     }
                 </script>
 

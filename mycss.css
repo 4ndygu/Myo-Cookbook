@@ -517,6 +517,10 @@ nav {
     font-size: 14px;
 }
 
+#recipename {
+    width: 80%;
+}
+
 /**
 *  side bar button
 */
