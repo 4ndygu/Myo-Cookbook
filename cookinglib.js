@@ -1,13 +1,9 @@
 var CookingLibrary = function (){
 
-    //var type = "R";
-    // 0 = rest, 1 = mix, 2 = cut, 3 = heat
-    var type = 0;
     var mixing_enabled = false;
     var mixing_state = 1;
     var mixing_min_x = -1000;
     var mixing_max_x = 1000;
-
     var mixing_counter = 0;
 
     var cutting_done = false;
@@ -16,6 +12,12 @@ var CookingLibrary = function (){
     var cutting_min_yaw = 0;
     var cutting_max_yaw = 0.8;
     var cutting_counter = 0;
+
+    var flipping_enabled = false;
+    var flipping_state = 1;
+    var flipping_min_yaw = -1000;
+    var flipping_max_yaw = 1000;
+    var flipping_counter = 0;
 
     this.ToggleMixOn = function(){
         mixing_enabled = true;
@@ -28,6 +30,12 @@ var CookingLibrary = function (){
     };
     this.ToggleCutOff = function(){
         cutting_enabled = false;
+    };
+    this.ToggleFlipOff = function(){
+        flipping_enabled = false;
+    };
+    this.ToggleFlipOn = function(){
+        flipping_enabled = true;
     };
 
     this.SendMixSignal = function(x){
@@ -109,6 +117,18 @@ var CookingLibrary = function (){
                 }
             }
         }
+        if (flipping_enabled){
+            if (flipping_state == 1){
+                if (yaw < flipping_min_yaw){
+                    flipping_state = 2;
+                }
+            } else {
+                if (yaw > flipping_max_yaw){
+                    flipping_state = 1;
+                    flipping_counter++;
+                }
+            }
+        }
         //this.CheckTask();
     };
     this.GetCounter = function(){
@@ -116,6 +136,9 @@ var CookingLibrary = function (){
             return mixing_counter;
         } else if (cutting_enabled){
             return cutting_counter;
+        }
+        if (flipping_enabled){
+            return flipping_counter;
         }
 
     };
@@ -138,10 +161,15 @@ var CookingLibrary = function (){
     this.ResetCounter = function(){
         mixing_counter = 0;
         cutting_counter = 0;
+        flipping_counter = 0;
     };
     this.SetMixBounds = function(x){
-        mixing_max_x = x + 0.05;
-        mixing_min_x = x - 0.04;
+        mixing_max_x = x + 0.04;
+        mixing_min_x = x - 0.02;
+    };
+    this.SetFlipBounds = function(yaw){
+        flipping_max_yaw = yaw + 1.5;
+        flipping_min_yaw = yaw - 0.7;
     };
     
 };
